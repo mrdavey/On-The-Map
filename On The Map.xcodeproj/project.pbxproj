@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		6311F6E81B89D0FE0052C418 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311F6E71B89D0FE0052C418 /* LoginViewController.swift */; };
-		63136B611B8B6ED700AADDE0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63136B601B8B6ED700AADDE0 /* FBSDKCoreKit.framework */; };
-		63136B651B8B73E600AADDE0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63136B631B8B73E600AADDE0 /* Bolts.framework */; };
+		63136B611B8B6ED700AADDE0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63136B601B8B6ED700AADDE0 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		63136B651B8B73E600AADDE0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63136B631B8B73E600AADDE0 /* Bolts.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		632D531F1B755FDC00B283D3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632D531E1B755FDC00B283D3 /* TableViewController.swift */; };
 		632D53211B75689100B283D3 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632D53201B75689100B283D3 /* InformationPostingViewController.swift */; };
 		63730ACC1B85143B002972DD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63730ACB1B85143B002972DD /* Protocols.swift */; };
 		63730AD01B851FDF002972DD /* OnTheMapUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63730ACF1B851FDF002972DD /* OnTheMapUITabBarController.swift */; };
-		6379EB971B8BD89A008CB4AF /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6379EB961B8BD89A008CB4AF /* FBSDKLoginKit.framework */; };
+		6379EB971B8BD89A008CB4AF /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6379EB961B8BD89A008CB4AF /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		6379EB991B8BD971008CB4AF /* Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 6379EB981B8BD94A008CB4AF /* Bridging-Header.h */; };
 		6396D29B1B4F14B400320472 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396D29A1B4F14B400320472 /* AppDelegate.swift */; };
 		6396D29D1B4F14B400320472 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396D29C1B4F14B400320472 /* MapViewController.swift */; };
 		6396D2A01B4F14B400320472 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6396D29E1B4F14B400320472 /* Main.storyboard */; };
@@ -44,13 +45,13 @@
 /* Begin PBXFileReference section */
 		6311F6E71B89D0FE0052C418 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		63136B601B8B6ED700AADDE0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		63136B621B8B710700AADDE0 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		63136B631B8B73E600AADDE0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		632D531E1B755FDC00B283D3 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		632D53201B75689100B283D3 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		63730ACB1B85143B002972DD /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		63730ACF1B851FDF002972DD /* OnTheMapUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapUITabBarController.swift; sourceTree = "<group>"; };
 		6379EB961B8BD89A008CB4AF /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		6379EB981B8BD94A008CB4AF /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6396D2951B4F14B400320472 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396D2991B4F14B400320472 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6396D29A1B4F14B400320472 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,9 +77,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6379EB971B8BD89A008CB4AF /* FBSDKLoginKit.framework in Frameworks */,
 				63136B611B8B6ED700AADDE0 /* FBSDKCoreKit.framework in Frameworks */,
 				63136B651B8B73E600AADDE0 /* Bolts.framework in Frameworks */,
-				6379EB971B8BD89A008CB4AF /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +106,7 @@
 		6396D28C1B4F14B400320472 = {
 			isa = PBXGroup;
 			children = (
-				63136B621B8B710700AADDE0 /* Bridging-Header.h */,
+				6379EB981B8BD94A008CB4AF /* Bridging-Header.h */,
 				6396D2971B4F14B400320472 /* On The Map */,
 				6396D2AD1B4F14B400320472 /* On The MapTests */,
 				6396D2961B4F14B400320472 /* Products */,
@@ -313,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6379EB991B8BD971008CB4AF /* Bridging-Header.h in Sources */,
 				6396D29D1B4F14B400320472 /* MapViewController.swift in Sources */,
 				639A99731B8A13790065D3FE /* Helpers.swift in Sources */,
 				632D531F1B755FDC00B283D3 /* TableViewController.swift in Sources */,
@@ -467,6 +469,9 @@
 					"$(PROJECT_DIR)/On",
 					The,
 					Map,
+					"$(PROJECT_DIR)/On",
+					The,
+					Map,
 				);
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,6 +487,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/On",
+					The,
+					Map,
 					"$(PROJECT_DIR)/On",
 					The,
 					Map,
