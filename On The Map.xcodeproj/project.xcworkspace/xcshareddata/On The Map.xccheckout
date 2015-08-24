@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EFCD767B-8419-4B0C-9C94-A40F81D27801</string>
+	<key>IDESourceControlProjectName</key>
+	<string>On The Map</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6A5B430C47BA8AD61EFEE847964082D2C710B81A</key>
+		<string>https://github.com/mrdavey/Udacity_OnTheMap.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>On The Map.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6A5B430C47BA8AD61EFEE847964082D2C710B81A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mrdavey/Udacity_OnTheMap.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6A5B430C47BA8AD61EFEE847964082D2C710B81A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6A5B430C47BA8AD61EFEE847964082D2C710B81A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Udacity_OnTheMap</string>
+		</dict>
+	</array>
+</dict>
+</plist>
