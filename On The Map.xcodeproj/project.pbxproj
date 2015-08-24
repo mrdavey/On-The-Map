@@ -14,7 +14,6 @@
 		632D53211B75689100B283D3 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632D53201B75689100B283D3 /* InformationPostingViewController.swift */; };
 		63730ACC1B85143B002972DD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63730ACB1B85143B002972DD /* Protocols.swift */; };
 		63730AD01B851FDF002972DD /* OnTheMapUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63730ACF1B851FDF002972DD /* OnTheMapUITabBarController.swift */; };
-		6379EB991B8BD971008CB4AF /* Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 6379EB981B8BD94A008CB4AF /* Bridging-Header.h */; };
 		6379EB9B1B8BDC71008CB4AF /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6379EB9A1B8BDC71008CB4AF /* FBSDKLoginKit.framework */; };
 		6396D29B1B4F14B400320472 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396D29A1B4F14B400320472 /* AppDelegate.swift */; };
 		6396D29D1B4F14B400320472 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6396D29C1B4F14B400320472 /* MapViewController.swift */; };
@@ -43,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63106F811B8BE11D00752D97 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6311F6E71B89D0FE0052C418 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		63136B601B8B6ED700AADDE0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		63136B631B8B73E600AADDE0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -50,7 +50,6 @@
 		632D53201B75689100B283D3 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		63730ACB1B85143B002972DD /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		63730ACF1B851FDF002972DD /* OnTheMapUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapUITabBarController.swift; sourceTree = "<group>"; };
-		6379EB981B8BD94A008CB4AF /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		6379EB9A1B8BDC71008CB4AF /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		6396D2951B4F14B400320472 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396D2991B4F14B400320472 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,7 +105,6 @@
 		6396D28C1B4F14B400320472 = {
 			isa = PBXGroup;
 			children = (
-				6379EB981B8BD94A008CB4AF /* Bridging-Header.h */,
 				6396D2971B4F14B400320472 /* On The Map */,
 				6396D2AD1B4F14B400320472 /* On The MapTests */,
 				6396D2961B4F14B400320472 /* Products */,
@@ -125,6 +123,7 @@
 		6396D2971B4F14B400320472 /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				63106F811B8BE11D00752D97 /* Bridging-Header.h */,
 				6396D29A1B4F14B400320472 /* AppDelegate.swift */,
 				6396D2BE1B50292900320472 /* Model */,
 				6396D2BD1B50291800320472 /* View */,
@@ -314,7 +313,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6379EB991B8BD971008CB4AF /* Bridging-Header.h in Sources */,
 				6396D29D1B4F14B400320472 /* MapViewController.swift in Sources */,
 				639A99731B8A13790065D3FE /* Helpers.swift in Sources */,
 				632D531F1B755FDC00B283D3 /* TableViewController.swift in Sources */,
@@ -391,6 +389,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -436,6 +435,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -458,8 +458,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/On",
+					The,
+					Map,
 					"$(PROJECT_DIR)/On",
 					The,
 					Map,
@@ -479,8 +483,8 @@
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "On The Map/Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "On The Map/Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -488,8 +492,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/On",
+					The,
+					Map,
 					"$(PROJECT_DIR)/On",
 					The,
 					Map,
@@ -509,8 +517,8 @@
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "On The Map/Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "On The Map/Bridging-Header.h";
 			};
 			name = Release;
 		};
