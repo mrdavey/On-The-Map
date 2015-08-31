@@ -12,12 +12,46 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var studentLocations = [StudentLocations]()
+    var loadedRestOfLocations: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // Override point for customization after application launch. 
+
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
+
+    func loadStudentRecords(completionHandler: (success: Bool, error: NSError?) -> Void) {
+        self.studentLocations.removeAll(keepCapacity: false)
+        ParseClient.sharedInstance().getStudentLocations { result, errorString in
+            if let result = result {
+                dispatch_async(dispatch_get_main_queue()) {
+                    for student in result {
+                        self.studentLocations.append(student)
+                    }
+                    completionHandler(success: true, error: nil)
+                }
+            } else {
+                completionHandler(success: false, error: errorString!)
+            }
+        }
+    }
+
+    func loadRestOfStudentLocations(completionHandler: (success: [StudentLocations]?, error: NSError?) -> Void) {
+        ParseClient.sharedInstance().getRestOfStudentLocations { result, errorString in
+            dispatch_async(dispatch_get_main_queue()) {
+                if let result = result {
+                    for student in result {
+                        self.studentLocations.append(student)
+                    }
+                    completionHandler(success: result, error: nil)
+                } else {
+                    completionHandler(success: nil, error: errorString!)
+                }
+            }
+        }
+    }
+
 
     func application(application: UIApplication,
         openURL url: NSURL,

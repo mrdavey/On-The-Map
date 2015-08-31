@@ -28,6 +28,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     }
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak var loadingOverlayActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadingOverlay: UIVisualEffectView!
+
     var bottomConstraintDefaultValue: CGFloat!
     var locationAnnotation: MKPlacemark?
     var delegate: passBackAnnotationDelegate?
@@ -48,11 +51,13 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
     }
 
-    @IBAction func findOnMapButtonPressed(sender: UIButton) {
+    @IBAction func findOnMapButtonPressed(sender: AnyObject) {
         self.view.endEditing(true)
-        showMapView(true)
+        loadingOverlay.hidden = false
+        loadingOverlayActivityIndicator.startAnimating()
         geocodeAddress(locationTextField.text) { success in
             if success {
+                self.showMapView(true)
                 self.enterURLTextField.becomeFirstResponder()
             }
         }
@@ -68,8 +73,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                 "lastName" : UdacityClient.Constants.UserLastName!,
                 "mapString" : locationAnnotation!.title,
                 "mediaURL" : enterURLTextField.text,
-                "latitude" : Float(locationAnnotation!.location.coordinate.latitude),
-                "longitude" : Float(locationAnnotation!.location.coordinate.longitude),
+                "latitude" : Double(locationAnnotation!.location.coordinate.latitude),
+                "longitude" : Double(locationAnnotation!.location.coordinate.longitude),
             ]
 
             // Check if location already exists
@@ -78,10 +83,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                     println("Duplicate found, updating")
                     ParseClient.sharedInstance().updateStudentLocation(ParseClient.Constants.StudentLocationObjectId, parameters: jsonBody) { success, error in
                         if success {
-                            println("updated!")
                             self.passDataBackToParentVC()
                         } else {
-                            Helpers.showAlertView(self, title: "Error Occured", message: "There was an error updating the location: \(error)")
+                            dispatch_async(dispatch_get_main_queue()) {
+                                Helpers.showAlertView(self, title: "Error Occured", message: "There was an error updating the location: \(error!.localizedDescription)")
+                            }
                         }
                     }
                 } else if result == false && error == nil {
@@ -90,12 +96,16 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                         if success {
                             self.passDataBackToParentVC()
                         } else {
-                            Helpers.showAlertView(self, title: "Error Occured", message: "Could not create location point on map: \(error)")
+                            dispatch_async(dispatch_get_main_queue()) {
+                                Helpers.showAlertView(self, title: "Error Occured", message: "Could not create location point on map: \(error!.localizedDescription)")
+                            }
                         }
                     }
 
                 } else {
-                    Helpers.showAlertView(self, title: "Error Occured", message: "An error occured:  \(error)")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        Helpers.showAlertView(self, title: "Error Occured", message: "An error occured:  \(error!.localizedDescription)")
+                    }
                 }
             }
         } else {
@@ -136,13 +146,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         if self.onMapView == false {
-            showMapView(true)
-            geocodeAddress(locationTextField.text) { success in
-                if success {
-                    self.enterURLTextField.delegate = self
-                    self.onMapView = true
-                }
-            }
+            self.findOnMapButtonPressed(self)
         } else {
             self.submitLocationButtonPressed(self)
         }
@@ -161,10 +165,14 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
             hideNonMapViewElements = true
             topBarViewBGColor = UIColor(red: 0.451, green: 0.716, blue: 0.917, alpha: 1)
             enterURLTextField.becomeFirstResponder()
+            onMapView = true
+            self.enterURLTextField.delegate = self
         } else {
             hideMapViewElements = true
             hideNonMapViewElements = false
             topBarViewBGColor = UIColor(red: 0.874, green: 0.874, blue: 0.874, alpha: 1)
+            onMapView = false
+            self.locationTextField.delegate = self
         }
 
         // Map related elements
@@ -189,11 +197,13 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
                 self.locationAnnotation = annotation
                 completionHandler(success: true)
             } else {
-                Helpers.showAlertView(self, title: "Error Occured", message: "Unable to geocode the address: \(error). Please try again.")
+                Helpers.showAlertView(self, title: "Error Occured", message: "Unable to geocode the address: \(error.localizedDescription). Please try again.")
                 self.showMapView(false)
                 self.locationTextField.text = ""
                 completionHandler(success: false)
             }
+            self.loadingOverlay.hidden = true
+            self.loadingOverlayActivityIndicator.stopAnimating()
         }
     }
 

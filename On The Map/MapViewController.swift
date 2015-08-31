@@ -13,47 +13,50 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     var annotations = [MKPointAnnotation]()
-    internal var loadedRestOfLocations: Bool = false
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        reloadStudentLocations()
+
+        self.mapView.delegate = self
+        loadStudentLocations()
     }
 
-    func reloadStudentLocations() {
+    func loadStudentLocations() {
+        self.mapView.removeAnnotations(annotations)
+        self.annotations.removeAll(keepCapacity: false)
 
-        // Refresh annotations shown on screen
-        if annotations.count > 0 {
-            self.mapView.removeAnnotations(self.annotations)
-            annotations.removeAll()
-        }
-
-        ParseClient.sharedInstance().getStudentLocations { result, errorString in
-            if let result = result {
+        appDelegate.loadStudentRecords { success, error in
+            if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
-                    for location in result {
-                        self.annotations.append(location.annotation)
-                    }
-                    self.mapView.addAnnotations(self.annotations)
+                    Helpers.showAlertView(self, title: "Error occured", message: "There was an error loading the student records. \(error.localizedDescription)")
                 }
-            } else {
-                Helpers.showAlertView(self, title: "Error Occured", message: "\(errorString)")
             }
         }
+        for location in appDelegate.studentLocations {
+            self.annotations.append(location.annotation)
+        }
+        self.mapView.addAnnotations(self.annotations)
     }
 
     func loadRestOfStudentLocations() {
-        ParseClient.sharedInstance().getRestOfStudentLocations { result, errorString in
-            if let result = result {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-                    for location in result {
-                        self.annotations.append(location.annotation)
-                    }
-                    self.mapView.addAnnotations(self.annotations)
-                    self.loadedRestOfLocations = true
+        self.mapView.removeAnnotations(self.annotations)
+        self.annotations.removeAll(keepCapacity: false)
+
+        appDelegate.loadRestOfStudentLocations { result, error in
+            if let error = error {
+                dispatch_async(dispatch_get_main_queue()) {
+                    Helpers.showAlertView(self, title: "Error occured", message: "Could not load remaining students \(error.localizedDescription)")
                 }
             } else {
-                Helpers.showAlertView(self, title: "Error Occured", message: "\(errorString)")
+                for location in self.appDelegate.studentLocations {
+                    self.annotations.append(location.annotation)
+                }
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.mapView.addAnnotations(self.annotations)
+                    self.appDelegate.loadedRestOfLocations = true
+                }
             }
         }
     }
@@ -86,7 +89,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
-        if loadedRestOfLocations == false {
+        if appDelegate.loadedRestOfLocations == false {
             loadRestOfStudentLocations()
         }
     }

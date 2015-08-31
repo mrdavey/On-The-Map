@@ -10,9 +10,9 @@ import UIKit
 
 class TableViewController: UITableViewController, UITableViewDelegate {
 
-    var studentLocations = [StudentLocations]()
-    internal var reloadedRestOfData: Bool = false
     var indicator = UIActivityIndicatorView()
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,41 +25,37 @@ class TableViewController: UITableViewController, UITableViewDelegate {
     func loadStudentLocations() {
         tableView.separatorStyle = .None
         indicator.startAnimating()
-        if studentLocations.count > 0 {
-            studentLocations.removeAll()
-        }
-        
-        ParseClient.sharedInstance().getStudentLocations { result, errorString in
-            if let result = result {
-                dispatch_async(dispatch_get_main_queue()) {
-                    for student in result {
-                        self.studentLocations.append(student)
+
+        if appDelegate.studentLocations.isEmpty {
+            appDelegate.loadStudentRecords { success, error in
+                if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        Helpers.showAlertView(self, title: "Error occured", message: "There was an error loading the student records. \(error.localizedDescription)")
                     }
-                    self.tableView.reloadData()
-                    self.indicator.stopAnimating()
-                    self.tableView.separatorStyle = .SingleLine
                 }
-            } else {
-                println(errorString)
-                // TODO: pop up error box
             }
         }
+
+        self.tableView.reloadData()
+        self.indicator.stopAnimating()
+        self.tableView.separatorStyle = .SingleLine
     }
 
     func loadRestOfStudentLocations() {
-        self.indicator.startAnimating()
-        ParseClient.sharedInstance().getRestOfStudentLocations { result, errorString in
-            if let result = result {
-                dispatch_async(dispatch_get_main_queue()) {
-                    for student in result {
-                        self.studentLocations.append(student)
+        if appDelegate.loadedRestOfLocations == false {
+            self.indicator.startAnimating()
+
+
+            appDelegate.loadRestOfStudentLocations { result, error in
+                if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        Helpers.showAlertView(self, title: "Error occured", message: "Could not load remaining students \(error.localizedDescription)")
                     }
-                    self.reloadedRestOfData = true
+                } else {
                     self.tableView.reloadData()
                     self.indicator.stopAnimating()
+                    self.appDelegate.loadedRestOfLocations = true
                 }
-            } else {
-                println(errorString)
             }
         }
     }
@@ -71,15 +67,14 @@ class TableViewController: UITableViewController, UITableViewDelegate {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentLocations.count
+        return appDelegate.studentLocations.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
-        let studentLocation = studentLocations[indexPath.row]
+        let studentLocation = appDelegate.studentLocations[indexPath.row]
 
         cell.textLabel?.text = studentLocation.annotation.title
-        // TODO: - Add cell map image
 
         return cell
     }
@@ -87,14 +82,14 @@ class TableViewController: UITableViewController, UITableViewDelegate {
     // MARK: - TableView Delgate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Open URL when cell clicked
-        let mediaURL = studentLocations[indexPath.row].annotation.subtitle
+        let mediaURL = appDelegate.studentLocations[indexPath.row].annotation.subtitle
         let app  = UIApplication.sharedApplication()
         app.openURL(NSURL(string: mediaURL)!)
     }
 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if reloadedRestOfData == false {
-            if indexPath.row == studentLocations.count - 1 {
+        if appDelegate.loadedRestOfLocations == false {
+            if indexPath.row == appDelegate.studentLocations.count - 1 {
                 loadRestOfStudentLocations()
             }
         }

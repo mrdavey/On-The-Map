@@ -150,7 +150,7 @@
                                                 </constraints>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.9764973521232605" green="0.78522801399230957" blue="0.51913809776306152" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -273,7 +273,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="N44-CU-hmy"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="AFe-qQ-UjP">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -358,7 +358,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.99990516900000004" green="1" blue="0.99987047910000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="URL"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.87411230802536011" green="0.87425607442855835" blue="0.87408167123794556" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -420,21 +420,42 @@
                                     <action selector="submitLocationButtonPressed:" destination="mIb-vH-s4g" eventType="touchUpInside" id="plp-kO-ZYh"/>
                                 </connections>
                             </button>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8et-yC-9Wa" userLabel="loading">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="WV0-UD-wlv">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="b6c-nn-gjL">
+                                            <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="b6c-nn-gjL" secondAttribute="centerY" id="PQ9-mQ-vfG"/>
+                                        <constraint firstAttribute="centerX" secondItem="b6c-nn-gjL" secondAttribute="centerX" id="mBw-eR-8qe"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.49132472276687622" green="0.71947193145751953" blue="0.90653353929519653" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="oIY-nH-PkP" firstAttribute="top" secondItem="Hde-jH-8DS" secondAttribute="bottom" id="2wt-Cm-0B3"/>
+                            <constraint firstItem="oIY-nH-PkP" firstAttribute="top" secondItem="8et-yC-9Wa" secondAttribute="bottom" id="FlA-Uh-bRs"/>
                             <constraint firstItem="3Wk-oo-Obd" firstAttribute="top" secondItem="tiI-bc-oCA" secondAttribute="bottom" constant="-20" id="FyE-6n-28b"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8et-yC-9Wa" secondAttribute="trailing" constant="-16" id="G0a-qv-pML"/>
                             <constraint firstItem="Hde-jH-8DS" firstAttribute="centerY" secondItem="wfI-as-UoV" secondAttribute="centerY" id="JGk-kR-IYU"/>
                             <constraint firstItem="DPu-sZ-jSU" firstAttribute="top" secondItem="3Wk-oo-Obd" secondAttribute="bottom" constant="16" id="JMU-fM-hAp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Wk-oo-Obd" secondAttribute="trailing" constant="-16" id="L6r-gm-Y8y"/>
                             <constraint firstItem="DPu-sZ-jSU" firstAttribute="trailing" secondItem="rqc-un-JD9" secondAttribute="trailingMargin" id="PXa-89-jev"/>
                             <constraint firstItem="DPu-sZ-jSU" firstAttribute="leading" secondItem="rqc-un-JD9" secondAttribute="leadingMargin" id="RgG-dL-mAI"/>
+                            <constraint firstItem="8et-yC-9Wa" firstAttribute="top" secondItem="tiI-bc-oCA" secondAttribute="bottom" constant="-20" id="X3y-Uc-zTy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hde-jH-8DS" secondAttribute="trailing" constant="-16" id="ZoZ-tZ-BA8"/>
                             <constraint firstItem="JjP-3E-aXi" firstAttribute="leading" secondItem="rqc-un-JD9" secondAttribute="leadingMargin" constant="-16" id="b0D-2l-Bv5"/>
                             <constraint firstItem="JjP-3E-aXi" firstAttribute="top" secondItem="3Wk-oo-Obd" secondAttribute="bottom" id="bpx-0f-G2K"/>
                             <constraint firstItem="Hde-jH-8DS" firstAttribute="leading" secondItem="rqc-un-JD9" secondAttribute="leadingMargin" constant="-16" id="iQ8-yr-s7X"/>
                             <constraint firstItem="3Wk-oo-Obd" firstAttribute="leading" secondItem="rqc-un-JD9" secondAttribute="leadingMargin" constant="-16" id="mHm-HZ-xQk"/>
+                            <constraint firstItem="8et-yC-9Wa" firstAttribute="leading" secondItem="rqc-un-JD9" secondAttribute="leadingMargin" constant="-16" id="rnR-v1-Ote"/>
                             <constraint firstItem="Hde-jH-8DS" firstAttribute="centerX" secondItem="wfI-as-UoV" secondAttribute="centerX" constant="-0.5" id="veW-yT-70N"/>
                             <constraint firstItem="oIY-nH-PkP" firstAttribute="top" secondItem="JjP-3E-aXi" secondAttribute="bottom" id="xTN-bc-S43"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JjP-3E-aXi" secondAttribute="trailing" constant="-16" id="z4s-it-6Oe"/>
@@ -445,6 +466,8 @@
                         <outlet property="bottomConstraint" destination="2wt-Cm-0B3" id="vsc-2Y-bSU"/>
                         <outlet property="enterURLTextField" destination="W3H-2P-9W5" id="EJe-Am-ben"/>
                         <outlet property="findOnTheMapButton" destination="An0-va-jOQ" id="YJg-QW-gXw"/>
+                        <outlet property="loadingOverlay" destination="8et-yC-9Wa" id="9SG-bW-kzs"/>
+                        <outlet property="loadingOverlayActivityIndicator" destination="b6c-nn-gjL" id="Yrf-uk-WUt"/>
                         <outlet property="locationTextField" destination="DPu-sZ-jSU" id="qvp-rg-t7n"/>
                         <outlet property="mapView" destination="JjP-3E-aXi" id="HFI-0f-fAc"/>
                         <outlet property="submitButton" destination="wfI-as-UoV" id="oXV-3I-nbI"/>

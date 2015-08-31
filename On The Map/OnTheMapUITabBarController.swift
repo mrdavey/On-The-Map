@@ -20,10 +20,6 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
         setupNavControllerButtons()
     }
 
-    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem!) {
-        refreshButtonPressed()
-    }
-
     func passBackAnnotation(annotation: MKPlacemark) {
         refreshButtonPressed()
         if self.selectedIndex == mapViewIndex {
@@ -39,7 +35,7 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
     // Set up the navigationController buttons
     func setupNavControllerButtons() {
         let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addButtonPressed"))
-        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: Selector("refreshButtonPressed"))
+        var refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: Selector("refreshButtonPressed"))
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logoutButtonPressed")
 
         self.title = "On The Map"
@@ -54,18 +50,23 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
     }
 
     func refreshButtonPressed() {
+        self.navigationItem.rightBarButtonItem!.enabled = false
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.loadedRestOfLocations = false
+
         if selectedIndex == mapViewIndex {
             let mapView = self.selectedViewController as! MapViewController
-            mapView.reloadStudentLocations()
-            mapView.loadedRestOfLocations = false
-            mapView.loadRestOfStudentLocations()
+                mapView.loadStudentLocations()
+                mapView.loadRestOfStudentLocations()
         } else if selectedIndex == tableViewIndex {
             let tableView = self.selectedViewController as! TableViewController
             tableView.loadStudentLocations()
-            tableView.reloadedRestOfData = false
         } else {
             println("invalid view selected")
         }
+        self.navigationItem.rightBarButtonItem!.enabled = true
+
+
     }
 
     func logoutButtonPressed() {
@@ -74,8 +75,10 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
             if success {
                 self.performSegueWithIdentifier("unwindSegue", sender: self)
             } else {
-                Helpers.showAlertView(self, title: "Error Occured", message: "Logout was not successful: \(error)")
-                self.navigationItem.leftBarButtonItem!.enabled = true
+                dispatch_async(dispatch_get_main_queue()) {
+                    Helpers.showAlertView(self, title: "Error Occured", message: "Logout was not successful: \(error!.localizedDescription)")
+                    self.navigationItem.leftBarButtonItem!.enabled = true
+                }
             }
         }
 

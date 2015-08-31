@@ -11,8 +11,7 @@ import Foundation
 extension ParseClient {
 
     // Load location data
-    func getStudentLocations(completionHandler: (result: [StudentLocations]?, errorString: String?) -> Void) {
-        println("Running getStudentLocations")
+    func getStudentLocations(completionHandler: (result: [StudentLocations]?, errorString: NSError?) -> Void) {
         let parameters = [
             "limit": 100,
             "order": "-createdAt"
@@ -20,64 +19,71 @@ extension ParseClient {
 
         ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.GETStudentLocations, parameters: parameters) { result, error in
             if let error = error {
-                completionHandler(result: nil, errorString: "Student Location download error")
+                completionHandler(result: nil, errorString: error)
             } else {
                 if let locationsData = result["results"] as? [[String: AnyObject]] {
                     let locations = StudentLocations.locationsFromResults(locationsData)
                     completionHandler(result: locations, errorString: nil)
                 } else {
-                    completionHandler(result: nil, errorString: "Student Locations not in correct format\n\(result)")
+                    let errorMessage = "Student Locations not in correct format"
+                    let errorDetails = NSError(domain: errorMessage, code: 100, userInfo: [
+                        NSLocalizedDescriptionKey : errorMessage
+                        ])
+                    completionHandler(result: nil, errorString: errorDetails)
                 }
             }
         }
     }
 
     // Skip the first 100 (since they are already loaded), then load the rest. If there were thousands of records, then would change this function to download 100 at a time, over time.
-    func getRestOfStudentLocations(completionHandler: (result: [StudentLocations]?, errorString: String?) -> Void) {
-        println("Running getRestOfStudentLocations in background")
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            let parameters = [
-                "skip": 100,
-                "order": "-createdAt"
-            ]
+    func getRestOfStudentLocations(completionHandler: (result: [StudentLocations]?, errorString: NSError?) -> Void) {
+        println("Running getRestOfStudentLocations")
+        let parameters = [
+            "skip": 100,
+            "order": "-createdAt"
+        ]
 
-            ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.GETStudentLocations, parameters: parameters) { result, error in
-                if let error = error {
-                    completionHandler(result: nil, errorString: "Student Location download error \(error)")
+        ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.GETStudentLocations, parameters: parameters) { result, error in
+            if let error = error {
+                completionHandler(result: nil, errorString: error)
+            } else {
+                if let locationsData = result["results"] as? [[String: AnyObject]] {
+                    let locations = StudentLocations.locationsFromResults(locationsData)
+                    completionHandler(result: locations, errorString: nil)
                 } else {
-                    if let locationsData = result["results"] as? [[String: AnyObject]] {
-                        let locations = StudentLocations.locationsFromResults(locationsData)
-                        completionHandler(result: locations, errorString: nil)
-                        println("Extra student locations loaded in BG: \(locations.count)")
-                    } else {
-                        completionHandler(result: nil, errorString: "Student Locations not in correct format\n\(result)")
-                    }
+                    let errorMessage = "Student Locations not in correct format"
+                    let errorDetails = NSError(domain: errorMessage, code: 100, userInfo: [
+                        NSLocalizedDescriptionKey : errorMessage
+                        ])
+                    completionHandler(result: nil, errorString: errorDetails)
                 }
             }
         }
     }
 
-    func createStudentLocation(jsonBody: [String: AnyObject], completionHandler: (success: Bool, error: String?)-> Void) {
+    func createStudentLocation(jsonBody: [String: AnyObject], completionHandler: (success: Bool, error: NSError?)-> Void) {
         let parameters = ["":""]
 
         ParseClient.sharedInstance().taskForPOSTMethod(ParseClient.Methods.POSTStudentLocations, parameters: parameters, jsonBody: jsonBody) { result, error in
             if let error = error {
-                completionHandler(success: false, error: "POST error: \(error)")
+                completionHandler(success: false, error: error)
             } else {
                 dispatch_async(dispatch_get_main_queue()){
                     if let created = result["createdAt"] as? String {
-                        println("\(created)")
                         completionHandler(success: true, error: nil)
                     } else {
                         let errorMessage = result["error"] as! String
-                        completionHandler(success: false, error: "JSON result error: \(error)")
+                        let errorDetails = NSError(domain: errorMessage, code: 100, userInfo: [
+                            NSLocalizedDescriptionKey : errorMessage
+                            ])
+                        completionHandler(success: false, error: errorDetails)
                     }
                 }
             }
         }
     }
 
-    func queryStudentLocation(completionHandler: (result: Bool, errorString: String?) -> Void) {
+    func queryStudentLocation(completionHandler: (result: Bool, errorString: NSError?) -> Void) {
 
         let parameters = [
             "where" : "{\"uniqueKey\":\"\(UdacityClient.Constants.UserID!)\"}"
@@ -85,9 +91,8 @@ extension ParseClient {
 
         ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.QUERYStudentLocations, parameters: parameters) { result, error in
             if let error = error {
-                completionHandler(result: false, errorString: "Error: \(error)")
+                completionHandler(result: false, errorString: error)
             } else {
-                println("Result: \(result)")
                 if let usersLocation = result["results"] as? [[String: AnyObject]] {
                     if usersLocation.isEmpty {
                         completionHandler(result: false, errorString: nil)
@@ -100,27 +105,27 @@ extension ParseClient {
                             completionHandler(result: true, errorString: nil)
                         }
                     }
-            } else {
-                completionHandler(result: false, errorString: "Error: \(result)")
+                } else {
+                    completionHandler(result: false, errorString: error)
+                }
             }
-        }
         }
     }
 
-    func updateStudentLocation(objectID: String, parameters: [String: AnyObject], completionHandler: (success: Bool, error: String?) -> Void) {
+    func updateStudentLocation(objectID: String, parameters: [String: AnyObject], completionHandler: (success: Bool, error: NSError?) -> Void) {
         ParseClient.sharedInstance().taskForPUTMethod(ParseClient.Methods.PUTStudentLocation, objectID: objectID, parameters: parameters) { success, error in
             if let error = error {
-                completionHandler(success: false, error: "Error: \(error)")
+                completionHandler(success: false, error: error)
             } else {
                 completionHandler(success: true, error: nil)
             }
         }
     }
 
-    func deleteStudentLocation(objectID: String, completionHandler: (success: Bool, error: String?) -> Void) {
+    func deleteStudentLocation(objectID: String, completionHandler: (success: Bool, error: NSError?) -> Void) {
         ParseClient.sharedInstance().taskForDELETEMethod(objectID) { success, error in
             if let error = error {
-                completionHandler(success: false, error: "Error: \(error)")
+                completionHandler(success: false, error: error)
             } else {
                 completionHandler(success: true, error: nil)
             }

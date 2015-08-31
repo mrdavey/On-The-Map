@@ -115,7 +115,7 @@ class ParseClient: NSObject {
     }
 
     // MARK: - DELETE
-    func taskForDELETEMethod(objectId: String, completionHandler: (success:Bool, error: String?) -> Void) -> NSURLSessionDataTask {
+    func taskForDELETEMethod(objectId: String, completionHandler: (success:Bool, error: NSError?) -> Void) -> NSURLSessionDataTask {
         let urlString = Constants.BaseURL + Methods.PUTStudentLocation + objectId
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
@@ -126,7 +126,7 @@ class ParseClient: NSObject {
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if let error = error {
-                completionHandler(success: false, error: "\(error)")
+                completionHandler(success: false, error: error)
             } else {
                 println("Data: \(data)")
                 println("Response: \(response)")
