@@ -21,15 +21,16 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
     }
 
     func passBackAnnotation(annotation: MKPlacemark) {
-        refreshButtonPressed()
-        if self.selectedIndex == mapViewIndex {
+        if self.selectedViewController!.tabBarItem.tag == mapViewIndex {
             let mapView = self.selectedViewController as! MapViewController
             mapView.mapView.setCenterCoordinate(annotation.location.coordinate, animated: true)
-        } else if self.selectedIndex == tableViewIndex {
+        } else if self.selectedViewController!.tabBarItem.tag == tableViewIndex {
             // Do nothing, for now.
         } else {
             println("invalid view selected")
         }
+        refreshButtonPressed()
+
     }
 
     // Set up the navigationController buttons
@@ -54,19 +55,19 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.loadedRestOfLocations = false
 
-        if selectedIndex == mapViewIndex {
+        if self.selectedViewController!.tabBarItem.tag == self.mapViewIndex {
+            println("mapview selected")
             let mapView = self.selectedViewController as! MapViewController
-                mapView.loadStudentLocations()
-                mapView.loadRestOfStudentLocations()
-        } else if selectedIndex == tableViewIndex {
+            mapView.viewComesIntoView()
+        } else if self.selectedViewController!.tabBarItem.tag == self.tableViewIndex {
+            println("tableview selected")
             let tableView = self.selectedViewController as! TableViewController
-            tableView.loadStudentLocations()
+            //tableView.viewComesIntoView()
+            tableView.tableView.reloadData()
         } else {
             println("invalid view selected")
         }
         self.navigationItem.rightBarButtonItem!.enabled = true
-
-
     }
 
     func logoutButtonPressed() {
@@ -86,7 +87,9 @@ class OnTheMapUITabBarController: UITabBarController, UITabBarDelegate, passBack
             let loginManager = FBSDKLoginManager()
             loginManager.logOut()
         }
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.studentLocations.removeAll(keepCapacity: false)
+
     }
-
-
 }

@@ -18,8 +18,18 @@ class TableViewController: UITableViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         addActivityLoadingIndicator()
-        loadStudentLocations()
+    }
 
+    override func viewWillAppear(animated: Bool) {
+        //viewComesIntoView()
+    }
+
+    func reloadStudents() {
+        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)) {
+            self.loadStudentLocations()
+            self.loadRestOfStudentLocations()
+            self.tableView.reloadData()
+        }
     }
 
     func loadStudentLocations() {
@@ -85,14 +95,8 @@ class TableViewController: UITableViewController, UITableViewDelegate {
         let mediaURL = appDelegate.studentLocations[indexPath.row].annotation.subtitle
         let app  = UIApplication.sharedApplication()
         app.openURL(NSURL(string: mediaURL)!)
-    }
 
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if appDelegate.loadedRestOfLocations == false {
-            if indexPath.row == appDelegate.studentLocations.count - 1 {
-                loadRestOfStudentLocations()
-            }
-        }
+        tableView.cellForRowAtIndexPath(indexPath)!.selected = false
     }
 
     func addActivityLoadingIndicator() {

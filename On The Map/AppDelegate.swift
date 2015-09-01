@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func loadStudentRecords(completionHandler: (success: Bool, error: NSError?) -> Void) {
         self.studentLocations.removeAll(keepCapacity: false)
+
         ParseClient.sharedInstance().getStudentLocations { result, errorString in
             if let result = result {
                 dispatch_async(dispatch_get_main_queue()) {

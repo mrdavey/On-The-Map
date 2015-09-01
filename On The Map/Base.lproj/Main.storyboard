@@ -26,18 +26,25 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="L7v-vx-vl7"/>
                                 </connections>
                             </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="hbt-iF-J3K">
+                                <rect key="frame" x="282" y="279" width="37" height="37"/>
+                                <color key="color" red="0.0016628403682261705" green="0.0016604501288384199" blue="0.0016595784109085798" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="pRl-bw-Jhx" secondAttribute="trailing" constant="-16" id="4HG-cm-HNT"/>
+                            <constraint firstItem="pRl-bw-Jhx" firstAttribute="centerY" secondItem="hbt-iF-J3K" secondAttribute="centerY" constant="0.5" id="I8z-vU-Jo3"/>
                             <constraint firstItem="pRl-bw-Jhx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="gcF-Iz-M3C"/>
                             <constraint firstItem="pRl-bw-Jhx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="i5z-So-qNa"/>
+                            <constraint firstItem="pRl-bw-Jhx" firstAttribute="centerX" secondItem="hbt-iF-J3K" secondAttribute="centerX" constant="-0.5" id="kdF-6s-zeu"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pRl-bw-Jhx" secondAttribute="bottom" id="vNK-c1-M9T"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="umj-7s-xdp"/>
                     <navigationItem key="navigationItem" id="nlh-su-hxn"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="hbt-iF-J3K" id="13G-Su-1bO"/>
                         <outlet property="mapView" destination="pRl-bw-Jhx" id="zbz-ef-Lfk"/>
                     </connections>
                 </viewController>
@@ -67,7 +74,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="List" image="ListIcon" id="dZB-6E-EXi"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="List" image="ListIcon" id="dZB-6E-EXi"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cC8-u3-MRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -358,7 +365,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.99990516900000004" green="1" blue="0.99987047910000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="URL"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.87411230802536011" green="0.87425607442855835" blue="0.87408167123794556" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

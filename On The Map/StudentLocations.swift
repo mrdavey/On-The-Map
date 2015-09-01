@@ -34,4 +34,17 @@ struct StudentLocations {
 
         return locations
     }
+
+    // Helper: Given an array of dictionaries, convert them to an array of StudentLocation objects and add them to the start of the array
+    static func locationsFromResultsInsert(results: [[String: AnyObject]]) -> [StudentLocations] {
+        var locations = [StudentLocations]()
+
+        var startIndex = 0
+        for result in results {
+            locations.insert(StudentLocations(dictionary: result), atIndex: startIndex)
+            startIndex++
+        }
+
+        return locations
+    }
 }

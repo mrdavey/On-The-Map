@@ -12,9 +12,11 @@ extension ParseClient {
 
     // Load location data
     func getStudentLocations(completionHandler: (result: [StudentLocations]?, errorString: NSError?) -> Void) {
+        println("Running getStudentLocations")
+
         let parameters = [
             "limit": 100,
-            "order": "-createdAt"
+            "order": "-updatedAt"
         ]
 
         ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.GETStudentLocations, parameters: parameters) { result, error in
@@ -40,7 +42,7 @@ extension ParseClient {
         println("Running getRestOfStudentLocations")
         let parameters = [
             "skip": 100,
-            "order": "-createdAt"
+            "order": "-updatedAt"
         ]
 
         ParseClient.sharedInstance().taskForGETMethod(ParseClient.Methods.GETStudentLocations, parameters: parameters) { result, error in
@@ -48,7 +50,7 @@ extension ParseClient {
                 completionHandler(result: nil, errorString: error)
             } else {
                 if let locationsData = result["results"] as? [[String: AnyObject]] {
-                    let locations = StudentLocations.locationsFromResults(locationsData)
+                    let locations = StudentLocations.locationsFromResultsInsert(locationsData)
                     completionHandler(result: locations, errorString: nil)
                 } else {
                     let errorMessage = "Student Locations not in correct format"
