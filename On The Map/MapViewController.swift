@@ -23,7 +23,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.mapView.delegate = self
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         activityIndicator.startAnimating()
         dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)) {
             self.loadStudentLocations()

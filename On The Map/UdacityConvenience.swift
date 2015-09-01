@@ -33,7 +33,13 @@ extension UdacityClient {
                             completionHandler(success: true, error: nil)
                         }
                     } else {
-                        completionHandler(success: false, error: error!)
+                        if let errorMessage = result["error"] as? String {
+                            let errorDetails = NSError(domain: errorMessage, code: 100, userInfo: [
+                                NSLocalizedDescriptionKey : errorMessage
+                                ])
+                            completionHandler(success: false, error: errorDetails)
+                        }
+                        completionHandler(success: false, error: nil) // No error returned from server
                     }
                 }
             }

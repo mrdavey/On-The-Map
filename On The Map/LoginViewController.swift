@@ -41,25 +41,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
-        loadingIndicator.hidden = false
-        loadingIndicator.startAnimating()
-        loginButton.enabled = false
-        loginButton.setTitle("", forState: UIControlState.Disabled)
-        UdacityClient.sharedInstance().loginToUdacity(emailTextField.text, password: passwordTextField.text) { success, error in
-            dispatch_async(dispatch_get_main_queue()) {
-                if success {
-                    println("login successful")
-                    UdacityClient.sharedInstance().getUsersDetails() { success, error in
-                        if let error = error {
-                            Helpers.showAlertView(self, title: "Error Occured", message: "\(error.localizedDescription) Please try again.")
-                            self.enableLoginButton()
-                        } else {
-                            self.performSegueWithIdentifier("loginSuccessful", sender: self)
+        if emailTextField.text.isEmpty || passwordTextField.text.isEmpty {
+            Helpers.showAlertView(self, title: "Login Error", message: "Both the email and password fields must be completed.")
+        } else {
+            loadingIndicator.hidden = false
+            loadingIndicator.startAnimating()
+            loginButton.enabled = false
+            loginButton.setTitle("", forState: UIControlState.Disabled)
+            UdacityClient.sharedInstance().loginToUdacity(emailTextField.text, password: passwordTextField.text) { success, error in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if success {
+                        println("login successful")
+                        UdacityClient.sharedInstance().getUsersDetails() { success, error in
+                            if let error = error {
+                                Helpers.showAlertView(self, title: "Error Occured", message: "\(error.localizedDescription) Please try again.")
+                                self.enableLoginButton()
+                            } else {
+                                self.performSegueWithIdentifier("loginSuccessful", sender: self)
+                            }
                         }
+                    } else {
+                        if let error = error {
+                            Helpers.showAlertView(self, title: "Login Error", message: "\(error.localizedDescription) Please try again.")
+                        }
+                        self.enableLoginButton()
                     }
-                } else {
-                    Helpers.showAlertView(self, title: "Login Error", message: "\(error!.localizedDescription) Please try again.")
-                    self.enableLoginButton()
                 }
             }
         }
